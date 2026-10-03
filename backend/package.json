@@ -1,0 +1,23 @@
+{
+  "name": "polling-voting-backend",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test --test-force-exit \"test/*.test.js\"",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "express": "^4.22.3"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.3"
+  }
+}

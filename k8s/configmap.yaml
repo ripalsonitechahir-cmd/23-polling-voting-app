@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: polling-voting-app
+data:
+  PORT: "3000"
+  DATABASE_URL: "file:/data/polls.db"
+  DEFAULT_EXPIRY_DAYS: "7"

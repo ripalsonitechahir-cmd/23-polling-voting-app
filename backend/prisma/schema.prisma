@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Poll {
+  id        Int      @id @default(autoincrement())
+  question  String
+  createdAt DateTime @default(now()) @map("created_at")
+  expiresAt DateTime @map("expires_at")
+  isClosed  Boolean  @default(false) @map("is_closed")
+  options   Option[]
+  votes     Vote[]
+
+  @@map("polls")
+}
+
+model Option {
+  id        Int    @id @default(autoincrement())
+  pollId    Int    @map("poll_id")
+  label     String
+  voteCount Int    @default(0) @map("vote_count")
+  poll      Poll   @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes     Vote[]
+
+  @@index([pollId])
+  @@map("options")
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement())
+  pollId    Int      @map("poll_id")
+  optionId  Int      @map("option_id")
+  voterHash String   @map("voter_hash")
+  createdAt DateTime @default(now()) @map("created_at")
+  poll      Poll     @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  option    Option   @relation(fields: [optionId], references: [id], onDelete: Cascade)
+
+  @@unique([pollId, voterHash])
+  @@map("votes")
+}

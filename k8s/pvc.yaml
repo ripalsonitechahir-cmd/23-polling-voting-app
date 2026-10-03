@@ -1,0 +1,11 @@
+# SQLite lives on this volume, shared by every app replica (single-node cluster).
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: polls-data
+  namespace: polling-voting-app
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
